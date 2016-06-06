@@ -28,7 +28,6 @@ var HTMLwelcomeMsg = '<span class="welcome-message">%data%</span>';
 
 var HTMLskillsStart = '<h3 id="skillsH3">Skills at a Glance:</h3><ul id="skills" class="flex-box"></ul>';
 var HTMLskills = '<li class="flex-item"><span class="white-text">%data%</span></li>';
-
 var HTMLworkStart = '<div class="work-entry"></div>';
 var HTMLworkEmployer = '<a href="#">%data%';
 var HTMLworkTitle = ' - %data%</a>';
@@ -40,7 +39,7 @@ var HTMLprojectStart = '<div class="project-entry"></div>';
 var HTMLprojectTitle = '<a href="#">%data%</a>';
 var HTMLprojectDates = '<div class="date-text">%data%</div>';
 var HTMLprojectDescription = '<p><br>%data%</p>';
-var HTMLprojectImage = '<img src="%data%">';
+var HTMLprojectImage = '<img src="%data%" class="projectImage">';
 
 var HTMLschoolStart = '<div class="education-entry"></div>';
 var HTMLschoolName = '<a href="#">%data%';
@@ -64,8 +63,8 @@ The International Name challenge in Lesson 2 where you'll create a function that
 */
 $(document).ready(function() {
   $('button').click(function() {
-    var iName = inName() || function(){};
-    $('#name').html(iName);  
+    var iName = inName("Lavanya Swaminathan") || function(){};
+    $('#name').html(iName);
   });
 });
 
@@ -102,7 +101,6 @@ var map;    // declares a global map variable
 Start here! initializeMap() is called when page is loaded.
 */
 function initializeMap() {
-
   var locations;
 
   var mapOptions = {
@@ -159,19 +157,33 @@ function initializeMap() {
       map: map,
       position: placeData.geometry.location,
       title: name
+
     });
 
     // infoWindows are the little helper windows that open when you click
     // or hover over a pin on a map. They usually contain more information
     // about a location.
+
+    var contentString = '<div id="content">'+'<div id="siteNotice">'+'</div>'+
+    '<h1 id="firstHeading" class="firstHeading">Burnaby Metropolis</h1>'+
+    '<div id="bodyContent">'+'<p><b>Metrotown</b>has a'+'skytrain 28 yrs old'+'It is close to Deerlake park which as a lake from glacier source</p>'+'<p>Attribution: Metrotown, <a href="https://www.google.ca/maps/place/Metropolis+at+Metrotown/@49.2210071,-123.0140819,14z/data=!4m2!3m1!1s0x0000000000000000:0x70139844bf95bfa5">'+
+    'https://http://en.wikipedia.org/wiki/Metrotown,_Burnaby</a>'+'(last visited June 22, 2009).</p>'+'</div>'+'</div>';
+
+
+
+
     var infoWindow = new google.maps.InfoWindow({
-      content: name
+      content: contentString
     });
 
     // hmmmm, I wonder what this is about...
     google.maps.event.addListener(marker, 'click', function() {
       // your code goes here!
+
+    infoWindow.open(map, marker);
+
     });
+
 
     // this is where the pin actually gets added to the map.
     // bounds.extend() takes in a map location object
@@ -225,19 +237,19 @@ function initializeMap() {
   // pinPoster(locations) creates pins on the map for each location in
   // the locations array
   pinPoster(locations);
-
 }
+
 
 /*
 Uncomment the code below when you're ready to implement a Google Map!
 */
 
 // Calls the initializeMap() function when the page loads
-//window.addEventListener('load', initializeMap);
+window.addEventListener('load', initializeMap);
 
 // Vanilla JS way to listen for resizing of the window
 // and adjust map bounds
-//window.addEventListener('resize', function(e) {
+window.addEventListener('resize', function(e) {
   // Make sure the map bounds get updated on page resize
-//  map.fitBounds(mapBounds);
-//});
+  map.fitBounds(mapBounds);
+});
